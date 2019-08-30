@@ -1,0 +1,10 @@
+{
+    "commands": {
+        "help": {
+            "description": "Shows this Help"
+        },
+        ">rs": {
+            "description": "Reconnect to Mongo DataBase"
+        }
+    }
+}
