@@ -1,0 +1,9 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "Server für alles",
+  "main": "server.ts",
+  "repository": "https://github.com/Rushifaaa/server.git",
+  "author": "Jakub Gencer / Rushifaaa",
+  "license": "GNU GPLv3"
+}
