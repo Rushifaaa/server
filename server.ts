@@ -60,6 +60,21 @@ const commands = () => {
     })
 }
 
+interface UserSchemaInterface extends mongoose.Document {
+    user: string,
+    password: string,
+    email: string
+}
+
+const UserSchema = new mongoose.Schema({
+    user: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    email: {type: String, required: true}
+});
+
+const User = mongoose.model<UserSchemaInterface>('User', UserSchema);
+
+
 mongoose.connection.on('connected', () => {
     console.log('Connected successfully to => '+ mongooseConnect);
     commands();
@@ -80,9 +95,27 @@ mongoose.connection.on('connected', () => {
 
         console.log(geo);
 
-        res.status(404);
+        res.status(200);
         res.header("Content-Type",'application/json');
-        res.end(JSON.stringify({status: "Not Found - 404"}));
+        res.end(JSON.stringify({status: "OK - 200"}));
+
+
+
+
+    })
+    .post((req, res) => {
+        const userName = req.body.user;
+        const password = req.body.password;
+        const email = req.body.email;
+        
+        const newUser = new User({
+            user: userName,
+            password: password,
+            email: email,
+        });
+
+        newUser.save().then(() => res.sendStatus(200))
+        .catch(err => console.error(err));
 
     });
 
@@ -90,15 +123,12 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('reconnected', () => {
     console.log('Reconnected successfully to => '+mongooseConnect);
-    commands();
 })
 mongoose.connection.on('close', () => {
     console.log('Closed connection to => ' + mongooseConnect);
-    commands();
 })
 mongoose.connection.on('error', () => {
     console.log('Reconnected successfully to => '+ mongooseConnect);
-    commands();
 })
 
 
